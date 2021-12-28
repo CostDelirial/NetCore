@@ -15,7 +15,7 @@ namespace SuspensionesAPI.Controllers
     [Route("api/ducto")]
     public class DuctoController: ControllerBase
     {
-        private static readonly List<Ducto_cat> ListaDuctos = new List<Ducto_cat>();
+        private static readonly List<ductos> ListaDuctos = new List<ductos>();
 
         private readonly IDuctoRepository _ductoRepository;
 
@@ -25,21 +25,23 @@ namespace SuspensionesAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(DataResult<Ducto_cat>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DataResult<ductos>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> ObtenerDuctos()
+        public async Task<IActionResult> ObtenerDuctos()
         {
-            
             var res = await _ductoRepository.ObtenerDuctos(ListaDuctos);
-            if(res.Status == System.Net.HttpStatusCode.OK)
+            if( res.Status == System.Net.HttpStatusCode.OK)
             {
                 return Ok(res);
             }
             else
             {
-                return Problem(null, null, 400, "Error Not Found", null);
+                return Problem(null, null, 400, "Error en la MATRIX", null);
             }
+            
+           
+            
         }
 
 

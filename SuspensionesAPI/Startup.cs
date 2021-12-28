@@ -36,9 +36,7 @@ namespace SuspensionesAPI
             services.AddDbContext<ApiDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("defaultApiConnection")));
 
-            //services.AddScoped(IDuctoRepository, DuctoRepository());
-            //services.AddScoped<IDuctoRepository>(x => new DuctoRepository());
-            //services.AddTransient<IDuctoRepository>(x => new DuctoRepository(null));    
+                
 
             //Inicio Eliminar
             services.AddCors(options =>
@@ -53,7 +51,7 @@ namespace SuspensionesAPI
             });
             //Fin Eliminar
 
-            //services.AddScoped<IDuctoRepository, DuctoRepository>();
+            services.AddScoped<IDuctoRepository, DuctoRepository>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace suspensionesAPI.Core.Models
 {
-    public class Logistica_cat
+    public class ductos
     {
-        public int id { get; set;  }
+        public int id { get; set; }
         public string nombre { get; set; }
     }
 }

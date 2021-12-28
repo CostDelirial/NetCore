@@ -22,22 +22,26 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             this.context = context;
 
         }
-        public async Task<DataResult<Ducto_cat>> ObtenerDuctos(List<Ducto_cat> ListaDuctos)
+        public async Task<DataResult<ductos>> ObtenerDuctos( List<ductos> ListaDuctos)
         {
-            DataResult<Ducto_cat> resultItem = new DataResult<Ducto_cat>()
+
+            DataResult<ductos> resultItem = new DataResult<ductos>()
             {
                 Message = "Lista Cargada",
                 Status = System.Net.HttpStatusCode.OK
             };
 
             try {
-                resultItem.Data = context.Ductos.Find();
-            
+
+                //resultItem.Data = await context.ductos.FindAsync(1);
+                ListaDuctos = await context.ductos.ToListAsync();
             }
-            catch (Exception ex) {
+            catch (Exception ex) 
+            {
                 Console.WriteLine(ex.Message);
                 resultItem.Message = "Ocurrio un error";
                 resultItem.Status = System.Net.HttpStatusCode.NotFound;
+                
             }
 
             await Task.CompletedTask;
