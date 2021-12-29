@@ -71,6 +71,8 @@ namespace SuspensionesAPI.Controllers
         public async Task<IActionResult> NuevoDucto(ductos ducto)
         {
             var res = await _ductoRepository.NuevoDucto(ducto, ListaDuctos);
+
+
             if(res.Status == System.Net.HttpStatusCode.OK)
             {
                 DataResult<int> result = new DataResult<int>()
