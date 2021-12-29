@@ -27,14 +27,18 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
             DataResult<ductos> resultItem = new DataResult<ductos>()
             {
+               
                 Message = "Lista Cargada",
                 Status = System.Net.HttpStatusCode.OK
             };
 
             try {
 
+
                 //resultItem.Data = await context.ductos.FindAsync(1);
                 ListaDuctos = await context.ductos.ToListAsync();
+                resultItem.Data = ListaDuctos;
+                
             }
             catch (Exception ex) 
             {

@@ -7,7 +7,7 @@ namespace SuspensionesAPI.Core.Dto
 {
     public class DataResult<T>
     {
-        public T Data { get; set; }
+        public List<T> Data { get; set; }
         public string Message { get; set; }
         public HttpStatusCode Status { get; set; }
     }
