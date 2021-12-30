@@ -13,7 +13,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
         }
 
-    public DbSet<ductos> ductos { get; set; }
+    public DbSet<cat_ducto> cat_ducto { get; set; }
     
     }
 }
