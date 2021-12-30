@@ -9,8 +9,11 @@ namespace SuspensionesAPI.Core.Interfaces.Repositories
 {
     public interface IDuctoRepository
     {
-        
-       Task<DataResultListas<cat_ducto>> ObtenerDuctos(List<cat_ducto> ListaDuctos);
+
+        //----------------------------------------------------------------------------------------------
+        //Metodos GET
+        //----------------------------------------------------------------------------------------------
+        Task<DataResultListas<cat_ducto>> ObtenerDuctos(List<cat_ducto> ListaDuctos);
         Task<DataResult<cat_ducto>> ObtenerUnDucto(int id);
 
         //----------------------------------------------------------------------------------------------

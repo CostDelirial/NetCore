@@ -50,8 +50,9 @@ namespace SuspensionesAPI
                                   });
             });
             //Fin Eliminar
-
+            //agregar rutas
             services.AddScoped<IDuctoRepository, DuctoRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

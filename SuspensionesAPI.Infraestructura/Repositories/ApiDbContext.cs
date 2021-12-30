@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using suspensionesAPI.Core.Models;
+using SuspensionesAPI.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,9 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
         }
 
-    public DbSet<cat_ducto> cat_ducto { get; set; }
+        public DbSet<cat_ducto> cat_ducto { get; set; }
+
+        public DbSet<usuarios> usuarios { get; set; }
     
     }
 }
