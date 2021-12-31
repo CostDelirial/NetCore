@@ -17,6 +17,8 @@ namespace SuspensionesAPI.Infraestructura.Repositories
         public DbSet<cat_ducto> cat_ducto { get; set; }
 
         public DbSet<usuarios> usuarios { get; set; }
-    
+
+        public DbSet<cat_logistica> cat_logistica { get; set; }
+
     }
 }

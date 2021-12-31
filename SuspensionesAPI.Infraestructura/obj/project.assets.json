@@ -1074,23 +1074,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\005084\\.nuget\\packages\\": {},
+    "C:\\Users\\1080000405\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Datos_Perfil\\005084\\Documents\\SuspensionesAPI\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj",
+      "projectUniqueName": "C:\\Users\\1080000405\\Documents\\NetCore\\NetCore\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj",
       "projectName": "SuspensionesAPI.Infraestructura",
-      "projectPath": "D:\\Datos_Perfil\\005084\\Documents\\SuspensionesAPI\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj",
-      "packagesPath": "C:\\Users\\005084\\.nuget\\packages\\",
-      "outputPath": "D:\\Datos_Perfil\\005084\\Documents\\SuspensionesAPI\\SuspensionesAPI.Infraestructura\\obj\\",
+      "projectPath": "C:\\Users\\1080000405\\Documents\\NetCore\\NetCore\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj",
+      "packagesPath": "C:\\Users\\1080000405\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\1080000405\\Documents\\NetCore\\NetCore\\SuspensionesAPI.Infraestructura\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\005084\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\1080000405\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -1105,8 +1105,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Datos_Perfil\\005084\\Documents\\SuspensionesAPI\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj": {
-              "projectPath": "D:\\Datos_Perfil\\005084\\Documents\\SuspensionesAPI\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj"
+            "C:\\Users\\1080000405\\Documents\\NetCore\\NetCore\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj": {
+              "projectPath": "C:\\Users\\1080000405\\Documents\\NetCore\\NetCore\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj"
             }
           }
         }
@@ -1164,7 +1164,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
