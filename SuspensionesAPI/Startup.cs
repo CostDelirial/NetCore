@@ -53,6 +53,8 @@ namespace SuspensionesAPI
             //agregar rutas
             services.AddScoped<IDuctoRepository, DuctoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ILogisticaRepository, LogisticaRepository>();
+            services.AddScoped<IMotivoSuspensionRepository, MotivoSuspensionRepository>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
