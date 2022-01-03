@@ -22,5 +22,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
         public DbSet<cat_motivoSuspension> cat_motivoSuspension { get; set; }
 
+        public DbSet<cat_personalCC> cat_personalCC { get; set; }
+
     }
 }
