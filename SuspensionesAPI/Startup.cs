@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using suspensionesAPI.Core.Models;
+
 
 namespace SuspensionesAPI
 {
@@ -34,7 +34,8 @@ namespace SuspensionesAPI
             services.AddControllers();
 
             services.AddDbContext<ApiDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("defaultApiConnection")));
+            options.UseNpgsql(Configuration.GetConnectionString("defaultApiConnection"), x => x.MigrationsAssembly("SuspensionesAPI")
+            ));
 
                 
 
