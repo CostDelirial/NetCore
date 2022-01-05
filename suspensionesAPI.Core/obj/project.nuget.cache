@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "0tPNYhurdiihXwBP+6Nid9ZGNPAxPwhUGQU88y8JQwY88an/kDE/xJMpDY3CwlwKvarp1CAGNJ6EdTJNbQIzBg==",
+  "dgSpecHash": "G1rATlHcwiSGCNJo9JnGVk91eDfjCemBIvazBqtnDAxd7WgEwB12SIKhfjRBtorAX97su/Sy4sQnnQGMh++MsA==",
   "success": true,
   "projectFilePath": "D:\\Datos_Perfil\\005084\\Documents\\SuspensionesAPI\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\005084\\.nuget\\packages\\microsoft.csharp\\4.6.0\\microsoft.csharp.4.6.0.nupkg.sha512",
+    "C:\\Users\\005084\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.0\\microsoft.aspnetcore.jsonpatch.3.1.0.nupkg.sha512",
+    "C:\\Users\\005084\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.0.nupkg.sha512",
+    "C:\\Users\\005084\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\microsoft.entityframeworkcore\\3.0.0\\microsoft.entityframeworkcore.3.0.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\3.0.0\\microsoft.entityframeworkcore.abstractions.3.0.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\3.0.0\\microsoft.entityframeworkcore.analyzers.3.0.0.nupkg.sha512",
@@ -24,6 +26,8 @@
     "C:\\Users\\005084\\.nuget\\packages\\microsoft.extensions.options\\3.0.0\\microsoft.extensions.options.3.0.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\microsoft.extensions.primitives\\3.0.0\\microsoft.extensions.primitives.3.0.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\005084\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\005084\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\npgsql\\4.1.0\\npgsql.4.1.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\3.0.0\\npgsql.entityframeworkcore.postgresql.3.0.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",

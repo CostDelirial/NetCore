@@ -35,9 +35,10 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
             try
             {
-
+                
                 //asignacion y consulta de base de datos
-                ListaMotivoSuspension = await context.cat_motivoSuspension.ToListAsync();
+                ListaMotivoSuspension = await context.cat_motivoSuspension.Include(x => x.id).ToListAsync();
+                Console.WriteLine(ListaMotivoSuspension);
                 resultItem.Data = ListaMotivoSuspension;
 
             }
@@ -135,7 +136,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                 Status = System.Net.HttpStatusCode.OK
             };
 
-            var existeDucto = await context.cat_ducto.AnyAsync(x => x.id == id);
+            var existeDucto = await context.cat_motivoSuspension.AnyAsync(x => x.id == id);
             if (!existeDucto)
             {
                 resultItem.Status = System.Net.HttpStatusCode.NotFound;

@@ -28,7 +28,7 @@ namespace SuspensionesAPI.Controllers
         //metodo get 
         //-----------------------------------------------------------------------------------------------------------
       
-        [HttpGet]
+        [HttpGet("logistica")]
         [ProducesResponseType(typeof(DataResultListas<cat_motivoSuspension>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

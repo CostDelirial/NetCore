@@ -34,6 +34,19 @@ namespace SuspensionesAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "cat_personalCC",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    nombre = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cat_personalCC", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "usuarios",
                 columns: table => new
                 {
@@ -57,24 +70,23 @@ namespace SuspensionesAPI.Migrations
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nombre = table.Column<string>(nullable: true),
-                    logisticaId = table.Column<int>(nullable: false),
-                    cat_logisticaid = table.Column<int>(nullable: true)
+                    logisticaid = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_cat_motivoSuspension", x => x.id);
                     table.ForeignKey(
-                        name: "FK_cat_motivoSuspension_cat_logistica_cat_logisticaid",
-                        column: x => x.cat_logisticaid,
+                        name: "FK_cat_motivoSuspension_cat_logistica_logisticaid",
+                        column: x => x.logisticaid,
                         principalTable: "cat_logistica",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_cat_motivoSuspension_cat_logisticaid",
+                name: "IX_cat_motivoSuspension_logisticaid",
                 table: "cat_motivoSuspension",
-                column: "cat_logisticaid");
+                column: "logisticaid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -84,6 +96,9 @@ namespace SuspensionesAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "cat_motivoSuspension");
+
+            migrationBuilder.DropTable(
+                name: "cat_personalCC");
 
             migrationBuilder.DropTable(
                 name: "usuarios");

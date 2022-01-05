@@ -39,7 +39,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             {
 
                 //asignacion y consulta de base de datos
-                ListaLogisticas = await context.cat_logistica.ToListAsync();
+                ListaLogisticas = await context.cat_logistica.Include(x => x.cat_motivoSuspensiones).ToListAsync();
                 resultItem.Data = ListaLogisticas;
 
             }
@@ -109,7 +109,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                 Status = System.Net.HttpStatusCode.OK
             };
 
-            var existeDucto = await context.cat_ducto.AnyAsync(x => x.id == id);
+            var existeDucto = await context.cat_logistica.AnyAsync(x => x.id == id);
             if (!existeDucto)
             {
                 resultItem.Status = System.Net.HttpStatusCode.NotFound;

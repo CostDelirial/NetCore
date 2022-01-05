@@ -104,7 +104,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                 Status = System.Net.HttpStatusCode.OK
             };
 
-            var existeDucto = await context.cat_ducto.AnyAsync(x => x.id == id);
+            var existeDucto = await context.cat_personalCC.AnyAsync(x => x.id == id);
             if (!existeDucto)
             {
                 resultItem.Status = System.Net.HttpStatusCode.NotFound;
@@ -133,7 +133,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                 Status = System.Net.HttpStatusCode.OK
             };
 
-            var existeDucto = await context.cat_ducto.AnyAsync(x => x.id == id);
+            var existeDucto = await context.cat_personalCC.AnyAsync(x => x.id == id);
             if (!existeDucto)
             {
                 resultItem.Status = System.Net.HttpStatusCode.NotFound;

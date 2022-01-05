@@ -108,3 +108,7 @@ C:\Users\1080000405\Documents\NetCore\NetCore\SuspensionesAPI\obj\Debug\netcorea
 C:\Users\1080000405\Documents\NetCore\NetCore\SuspensionesAPI\obj\Debug\netcoreapp3.1\SuspensionesAPI.RazorTargetAssemblyInfo.cache
 C:\Users\1080000405\Documents\NetCore\NetCore\SuspensionesAPI\obj\Debug\netcoreapp3.1\SuspensionesAPI.csproj.CopyComplete
 C:\Users\1080000405\Documents\NetCore\NetCore\SuspensionesAPI\obj\Debug\netcoreapp3.1\SuspensionesAPI.genruntimeconfig.cache
+D:\Datos_Perfil\005084\Documents\SuspensionesAPI\SuspensionesAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\Datos_Perfil\005084\Documents\SuspensionesAPI\SuspensionesAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Datos_Perfil\005084\Documents\SuspensionesAPI\SuspensionesAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\Datos_Perfil\005084\Documents\SuspensionesAPI\SuspensionesAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

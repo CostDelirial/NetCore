@@ -1,4 +1,5 @@
-﻿using SuspensionesAPI.Core.Models;
+﻿
+using SuspensionesAPI.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,11 +9,11 @@ namespace suspensionesAPI.Core.Models
 {
     public class cat_logistica
     {
+        
         public int id { get; set; }
         
         public string nombre { get; set; }
 
-      public List<cat_motivoSuspension> cat_motivosuspension { get; set; }
-
+        public List<cat_motivoSuspension> cat_motivoSuspensiones { get; set; }
     }
 }
