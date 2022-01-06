@@ -37,7 +37,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             {
                 
                 //asignacion y consulta de base de datos
-                ListaMotivoSuspension = await context.cat_motivoSuspension.Include(x => x.id).ToListAsync();
+                ListaMotivoSuspension = await context.cat_motivoSuspension.Include(x => x.logistica).ToListAsync();
                 Console.WriteLine(ListaMotivoSuspension);
                 resultItem.Data = ListaMotivoSuspension;
 
