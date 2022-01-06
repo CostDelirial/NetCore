@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace suspensionesAPI.Core.Models
 {
-    public class MotivoSuspension_cat
+    public class cat_ducto
     {
         public int id { get; set; }
+        [Required(ErrorMessage = "EL campo {0} es obligatorio")]
         public string nombre { get; set; }
-        public List<Logistica_cat> Logistica_cats { get; set; }
-
-     }
+    }
 }

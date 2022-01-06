@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace suspensionesAPI.Core.Models
+namespace SuspensionesAPI.Core.Models
 {
-    public class Logistica_cat
+    public class cat_personalCC
     {
-        public int id { get; set;  }
+        public int id { get; set; }
         public string nombre { get; set; }
     }
 }

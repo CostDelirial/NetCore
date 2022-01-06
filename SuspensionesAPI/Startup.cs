@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using suspensionesAPI.Core.Models;
+
 
 namespace SuspensionesAPI
 {
@@ -31,14 +31,13 @@ namespace SuspensionesAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson( options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<ApiDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("defaultApiConnection")));
+            options.UseNpgsql(Configuration.GetConnectionString("defaultApiConnection"), x => x.MigrationsAssembly("SuspensionesAPI")
+            ));
 
-            //services.AddScoped(IDuctoRepository, DuctoRepository());
-            //services.AddScoped<IDuctoRepository>(x => new DuctoRepository());
-            //services.AddTransient<IDuctoRepository>(x => new DuctoRepository(null));    
+                
 
             //Inicio Eliminar
             services.AddCors(options =>
@@ -52,8 +51,12 @@ namespace SuspensionesAPI
                                   });
             });
             //Fin Eliminar
-
-            //services.AddScoped<IDuctoRepository, DuctoRepository>();
+            //agregar rutas
+            services.AddScoped<IDuctoRepository, DuctoRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ILogisticaRepository, LogisticaRepository>();
+            services.AddScoped<IMotivoSuspensionRepository, MotivoSuspensionRepository>();
+            services.AddScoped<IPersonalCCRepository, PersonalCCRepository>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
