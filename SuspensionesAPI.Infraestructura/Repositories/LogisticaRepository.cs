@@ -39,7 +39,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             {
 
                 //asignacion y consulta de base de datos
-                ListaLogisticas = await context.cat_logistica.Include(x => x.cat_motivoSuspensiones).ToListAsync();
+                ListaLogisticas = await context.cat_logistica.Include(x => x.motivoSuspensiones).ToListAsync();
                 resultItem.Data = ListaLogisticas;
 
             }

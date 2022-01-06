@@ -14,6 +14,6 @@ namespace suspensionesAPI.Core.Models
         
         public string nombre { get; set; }
 
-        public List<cat_motivoSuspension> cat_motivoSuspensiones { get; set; }
+        public List<cat_motivoSuspension> motivoSuspensiones { get; set; }
     }
 }
