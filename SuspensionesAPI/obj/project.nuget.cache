@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iAPQ/GF0QhGBHgLtQDWMwekksYvOrOEJuHj7YYm9K/Hi+slyXv3Pj6aBgc+Qk9/UG3i2Ttr21irQVpRAJNgMrA==",
+  "dgSpecHash": "b3vaJlDTgmilyqFgxHxmDuzGsi09O4B+OpV6yRH/4kvBx5HiUZMBBayy1PbJ5E1x6vpbpmJx1vCM/oU8PAKTBQ==",
   "success": true,
   "projectFilePath": "D:\\Datos_Perfil\\005084\\Documents\\SuspensionesAPI\\SuspensionesAPI\\SuspensionesAPI.csproj",
   "expectedPackageFiles": [
@@ -38,7 +38,8 @@
     "C:\\Users\\005084\\.nuget\\packages\\system.componentmodel.annotations\\4.6.0\\system.componentmodel.annotations.4.6.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.6.0\\system.diagnostics.diagnosticsource.4.6.0.nupkg.sha512",
     "C:\\Users\\005084\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.6.0\\system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512",
-    "C:\\Users\\005084\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512"
+    "C:\\Users\\005084\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512",
+    "C:\\Users\\005084\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512"
   ],
   "logs": []
 }

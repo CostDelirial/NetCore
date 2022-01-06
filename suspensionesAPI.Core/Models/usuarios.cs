@@ -12,6 +12,7 @@ namespace SuspensionesAPI.Core.Models
         public string password { get; set; }
         public int tipo { get; set; }
         public int estatus { get; set; }
+        //public logs Logs { get; set; }
 
     }
 }

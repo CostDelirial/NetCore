@@ -9,8 +9,8 @@ using SuspensionesAPI.Infraestructura.Repositories;
 namespace SuspensionesAPI.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20220105190145_Inicial")]
-    partial class Inicial
+    [Migration("20220106180650_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,7 +116,7 @@ namespace SuspensionesAPI.Migrations
             modelBuilder.Entity("SuspensionesAPI.Core.Models.cat_motivoSuspension", b =>
                 {
                     b.HasOne("suspensionesAPI.Core.Models.cat_logistica", "logistica")
-                        .WithMany("cat_motivoSuspensiones")
+                        .WithMany("cat_motivoSuspension")
                         .HasForeignKey("logisticaid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

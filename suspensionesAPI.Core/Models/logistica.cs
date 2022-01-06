@@ -9,11 +9,12 @@ namespace suspensionesAPI.Core.Models
 {
     public class cat_logistica
     {
-        
+        [Key]
         public int id { get; set; }
         
         public string nombre { get; set; }
 
-        public List<cat_motivoSuspension> cat_motivoSuspensiones { get; set; }
+ 
+        public List<cat_motivoSuspension> cat_motivoSuspension { get; set; }
     }
 }

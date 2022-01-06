@@ -9,9 +9,10 @@ namespace SuspensionesAPI.Core.Models
 {
     public class cat_motivoSuspension
     {
-       
+       [Key]
         public int id { get; set; }
         public string nombre { get; set; }
+       
         public int logisticaid { get; set; }
         public cat_logistica logistica { get; set; }
      

@@ -114,7 +114,7 @@ namespace SuspensionesAPI.Migrations
             modelBuilder.Entity("SuspensionesAPI.Core.Models.cat_motivoSuspension", b =>
                 {
                     b.HasOne("suspensionesAPI.Core.Models.cat_logistica", "logistica")
-                        .WithMany("cat_motivoSuspensiones")
+                        .WithMany("cat_motivoSuspension")
                         .HasForeignKey("logisticaid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
