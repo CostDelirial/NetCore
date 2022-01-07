@@ -11,11 +11,16 @@ namespace SuspensionesAPI.Core.Models
     {
        [Key]
         public int id { get; set; }
+        [Required(ErrorMessage = "EL nombre del {0} es obligatorio")]
         public string nombre { get; set; }
-       
+        [Required(ErrorMessage = "Debes seleccionar una {1}")]
         public int logisticaid { get; set; }
         public cat_logistica logistica { get; set; }
-     
+
+
+        //
+        //public List<suspensiones> suspension { get; set; }
+
     }
 }
 

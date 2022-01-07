@@ -50,3 +50,16 @@ C:\Users\warsystem\Documents\pemexAPI\proyectoPemx\NetCore\suspensionesAPI.Core\
 C:\Users\warsystem\Documents\pemexAPI\proyectoPemx\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.dll
 C:\Users\warsystem\Documents\pemexAPI\proyectoPemx\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.pdb
 C:\Users\warsystem\Documents\pemexAPI\proyectoPemx\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.genruntimeconfig.cache
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\bin\Debug\netcoreapp3.1\SuspensionesAPI.Core.deps.json
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\bin\Debug\netcoreapp3.1\SuspensionesAPI.Core.runtimeconfig.json
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\bin\Debug\netcoreapp3.1\SuspensionesAPI.Core.runtimeconfig.dev.json
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\bin\Debug\netcoreapp3.1\SuspensionesAPI.Core.dll
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\bin\Debug\netcoreapp3.1\SuspensionesAPI.Core.pdb
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.csproj.AssemblyReference.cache
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.AssemblyInfoInputs.cache
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.AssemblyInfo.cs
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.csproj.CoreCompileInputs.cache
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.dll
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.pdb
+D:\Datos_Perfil\005493\Documents\SSENetCore\NetCore\suspensionesAPI.Core\obj\Debug\netcoreapp3.1\SuspensionesAPI.Core.genruntimeconfig.cache

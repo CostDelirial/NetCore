@@ -11,7 +11,7 @@ namespace suspensionesAPI.Core.Models
     {
         [Key]
         public int id { get; set; }
-        
+        [Required(ErrorMessage = "EL nombre del {0} es obligatorio")]
         public string nombre { get; set; }
 
  

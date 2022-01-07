@@ -70,6 +70,7 @@ namespace SuspensionesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> NuevoDucto([FromBody] cat_ducto ducto)
         {
+            
             var res = await _ductoRepository.NuevoDucto(ducto, ListaDuctos);
 
 

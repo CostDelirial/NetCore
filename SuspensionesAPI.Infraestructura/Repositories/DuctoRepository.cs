@@ -84,6 +84,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
         //--------------------------------------------------------------------------------------------------
         public async Task<DataResult<List<cat_ducto>>> NuevoDucto(cat_ducto ducto, List<cat_ducto> ListaDuctos)
         {
+           
             DataResult<List<cat_ducto>> resultList = new DataResult<List<cat_ducto>>()
             {
                 Message = "Se agrego con exito",
