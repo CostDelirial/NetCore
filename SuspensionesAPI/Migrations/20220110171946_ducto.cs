@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace SuspensionesAPI.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class ducto : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,8 @@ namespace SuspensionesAPI.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    nombre = table.Column<string>(nullable: false)
+                    nombre = table.Column<string>(nullable: false),
+                    estatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +28,7 @@ namespace SuspensionesAPI.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    nombre = table.Column<string>(nullable: true)
+                    nombre = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,7 +71,7 @@ namespace SuspensionesAPI.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    nombre = table.Column<string>(nullable: true),
+                    nombre = table.Column<string>(nullable: false),
                     logisticaid = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

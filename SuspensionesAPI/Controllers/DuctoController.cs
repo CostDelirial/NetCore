@@ -61,10 +61,28 @@ namespace SuspensionesAPI.Controllers
             }
         }
 
-        //---------------------------------------------------------------------------------------------
-        //metodos POST PARA DUCTOS
-        //---------------------------------------------------------------------------------------------
-        [HttpPost]
+        [HttpGet("activos")]
+        [ProducesResponseType(typeof(DataResultListas<cat_ducto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ObtenerDuctosActivos()
+        {
+            var res = await _ductoRepository.ObtenerDuctosActivos(ListaDuctos);
+            if (res.Status == System.Net.HttpStatusCode.OK)
+            {
+                return Ok(res);
+            }
+            else
+            {
+                return Problem(null, null, 400, "Error en la MATRIX", null);
+            }
+
+        }
+        
+       //---------------------------------------------------------------------------------------------
+       //metodos POST PARA DUCTOS
+       //---------------------------------------------------------------------------------------------
+       [HttpPost]
         [ProducesResponseType(typeof(DataResult<int>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -30,6 +30,7 @@ namespace SuspensionesAPI.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("nombre")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("id");
@@ -136,6 +137,9 @@ namespace SuspensionesAPI.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("estatus")
+                        .HasColumnType("integer");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("text");
@@ -153,6 +157,7 @@ namespace SuspensionesAPI.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("nombre")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("id");

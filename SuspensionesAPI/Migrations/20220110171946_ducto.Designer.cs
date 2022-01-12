@@ -10,8 +10,8 @@ using SuspensionesAPI.Infraestructura.Repositories;
 namespace SuspensionesAPI.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20220107171336_Inicial")]
-    partial class Inicial
+    [Migration("20220110171946_ducto")]
+    partial class ducto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,7 @@ namespace SuspensionesAPI.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("nombre")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("id");
@@ -138,6 +139,9 @@ namespace SuspensionesAPI.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("estatus")
+                        .HasColumnType("integer");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("text");
@@ -155,6 +159,7 @@ namespace SuspensionesAPI.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("nombre")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("id");
