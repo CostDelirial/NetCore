@@ -14,6 +14,6 @@ namespace suspensionesAPI.Core.Models
 
         public int estatus { get; set; }
 
-        public List<suspensiones> suspension { get; set; }
+        //public List<suspensiones> suspension { get; set; }
     }
 }

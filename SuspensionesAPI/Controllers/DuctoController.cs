@@ -158,6 +158,55 @@ namespace SuspensionesAPI.Controllers
 
         }
         //---------------------------------------------------------------------------------------------
+        //metodos PUT para estatus DUCTOS
+        //---------------------------------------------------------------------------------------------
+        [HttpPut("Estatus{id:int}")]
+        [ProducesResponseType(typeof(DataResult<int>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ModificaEstatusDucto(cat_ducto ducto)
+        {
+            
+            var res = await _ductoRepository.ModificaEstatusDucto(ducto);
+
+            if (res.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataResult<int> result = new DataResult<int>()
+                {
+                    Data = 1,
+                    Message = "Se modifico con exito",
+                    Status = System.Net.HttpStatusCode.OK
+                };
+                return Ok(result);
+            }
+            if (res.Status == System.Net.HttpStatusCode.NotFound)
+            {
+                DataResult<int> result = new DataResult<int>()
+                {
+                    Data = 0,
+                    Message = "El ducto no existe",
+                    Status = System.Net.HttpStatusCode.NotFound
+                };
+
+                return NotFound(result);
+            }
+            if (res.Status == System.Net.HttpStatusCode.BadRequest)
+            {
+                DataResult<int> result = new DataResult<int>()
+                {
+                    Data = 0,
+                    Message = "El Id del ducto no coincide",
+                    Status = System.Net.HttpStatusCode.BadRequest
+                };
+                return BadRequest(result);
+            }
+            else
+            {
+                return Problem(null, null, 400, "Error en la MATRIX", null);
+            }
+
+        }
+        //---------------------------------------------------------------------------------------------
         //metodos DELETE para DUCTOS
         //---------------------------------------------------------------------------------------------
         [HttpDelete("{id:int}")]

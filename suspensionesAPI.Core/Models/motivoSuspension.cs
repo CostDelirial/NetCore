@@ -16,7 +16,7 @@ namespace SuspensionesAPI.Core.Models
         [Required(ErrorMessage = "Debes seleccionar una {1}")]
         public int logisticaid { get; set; }
         public cat_logistica logistica { get; set; }
-        public List<suspensiones> suspension { get; set; }
+        //public List<suspensiones> suspension { get; set; }
 
     }
 }

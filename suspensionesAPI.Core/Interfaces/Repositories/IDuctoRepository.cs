@@ -30,6 +30,7 @@ namespace SuspensionesAPI.Core.Interfaces.Repositories
         //----------------------------------------------------------------------------------------------
 
         Task<DataResult<cat_ducto>> ModificaDucto(int id, cat_ducto ducto);
+        Task<DataResult<cat_ducto>> ModificaEstatusDucto(cat_ducto ducto);
 
         //----------------------------------------------------------------------------------------------
         //Metodos DELETE

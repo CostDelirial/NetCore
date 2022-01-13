@@ -9,6 +9,6 @@ namespace SuspensionesAPI.Core.Models
         public int id { get; set; }
         public string nombre { get; set; }
         
-        public List<suspensiones> suspension { get; set; }
+        //public List<suspensiones> suspension { get; set; }
     }
 }

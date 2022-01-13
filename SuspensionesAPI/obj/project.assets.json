@@ -1232,23 +1232,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\005493\\.nuget\\packages\\": {},
+    "C:\\Users\\005084\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Datos_Perfil\\005493\\Documents\\SSENetCore\\NetCore\\SuspensionesAPI\\SuspensionesAPI.csproj",
+      "projectUniqueName": "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\SuspensionesAPI\\SuspensionesAPI.csproj",
       "projectName": "SuspensionesAPI",
-      "projectPath": "D:\\Datos_Perfil\\005493\\Documents\\SSENetCore\\NetCore\\SuspensionesAPI\\SuspensionesAPI.csproj",
-      "packagesPath": "C:\\Users\\005493\\.nuget\\packages\\",
-      "outputPath": "D:\\Datos_Perfil\\005493\\Documents\\SSENetCore\\NetCore\\SuspensionesAPI\\obj\\",
+      "projectPath": "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\SuspensionesAPI\\SuspensionesAPI.csproj",
+      "packagesPath": "C:\\Users\\005084\\.nuget\\packages\\",
+      "outputPath": "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\SuspensionesAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\005493\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\005084\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -1263,8 +1263,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Datos_Perfil\\005493\\Documents\\SSENetCore\\NetCore\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj": {
-              "projectPath": "D:\\Datos_Perfil\\005493\\Documents\\SSENetCore\\NetCore\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj"
+            "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj": {
+              "projectPath": "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\SuspensionesAPI.Infraestructura\\SuspensionesAPI.Infraestructura.csproj"
             }
           }
         }
@@ -1322,6 +1322,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.21, 3.1.21]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -1330,7 +1336,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
