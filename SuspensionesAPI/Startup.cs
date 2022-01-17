@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity;
 
 namespace SuspensionesAPI
 {
@@ -51,12 +51,45 @@ namespace SuspensionesAPI
                                   });
             });
             //Fin Eliminar
+
+
+            //autenticación
+            services.Configure<IdentityOptions>(options =>
+            {
+                // ajustes de password
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+
+                //configuraciónm de password
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                //configuracion de usuario
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            
+
+            });
+
+            //Cookies configuración
+            services.ConfigureApplicationCookie(options => {
+
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+           
+            });
+
             //agregar rutas
             services.AddScoped<IDuctoRepository, DuctoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ILogisticaRepository, LogisticaRepository>();
             services.AddScoped<IMotivoSuspensionRepository, MotivoSuspensionRepository>();
             services.AddScoped<IPersonalCCRepository, PersonalCCRepository>();
+            services.AddScoped<ISuspensionesRepository, SuspensionesRepository>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

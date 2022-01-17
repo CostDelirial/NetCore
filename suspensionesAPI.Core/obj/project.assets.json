@@ -1181,23 +1181,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\warsystem\\.nuget\\packages\\": {},
+    "C:\\Users\\005084\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\warsystem\\Documents\\pemexAPI\\proyectoPemx\\NetCore\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj",
+      "projectUniqueName": "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj",
       "projectName": "SuspensionesAPI.Core",
-      "projectPath": "C:\\Users\\warsystem\\Documents\\pemexAPI\\proyectoPemx\\NetCore\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj",
-      "packagesPath": "C:\\Users\\warsystem\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\warsystem\\Documents\\pemexAPI\\proyectoPemx\\NetCore\\suspensionesAPI.Core\\obj\\",
+      "projectPath": "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\suspensionesAPI.Core\\SuspensionesAPI.Core.csproj",
+      "packagesPath": "C:\\Users\\005084\\.nuget\\packages\\",
+      "outputPath": "D:\\Datos_Perfil\\005084\\Documents\\NetCore\\suspensionesAPI.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\warsystem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\005084\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],

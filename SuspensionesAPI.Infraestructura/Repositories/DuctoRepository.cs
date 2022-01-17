@@ -4,6 +4,7 @@ using SuspensionesAPI.Core.Dto;
 using SuspensionesAPI.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -79,11 +80,47 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             await Task.CompletedTask;
             return resultItem;
         }
+
+        //--------------------------------------------------------------------------------------------------
+        // METODO GET PARA OBTENER  DUCTOS HABILITADOS 
+        //--------------------------------------------------------------------------------------------------
+        public async Task<DataResultListas<cat_ducto>> ObtenerDuctosActivos(List<cat_ducto> ListaDuctos)
+        {
+
+            //Asignación de valores para el data result 
+            DataResultListas<cat_ducto> resultItem = new DataResultListas<cat_ducto>()
+            {
+
+                Message = "Lista Cargada",
+                Status = System.Net.HttpStatusCode.OK
+            };
+
+            try
+            {
+
+                //asignacion y consulta de base de datos
+                ListaDuctos = await context.cat_ducto.Where(s => s.estatus == 1).ToListAsync();
+                resultItem.Data = ListaDuctos;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                resultItem.Message = "Ocurrio un error";
+                resultItem.Status = System.Net.HttpStatusCode.NotFound;
+
+            }
+
+            await Task.CompletedTask;
+            return resultItem; //retorno de valor Data resulta a la repsuesta de DuctoCOntroller
+        }
+
         //--------------------------------------------------------------------------------------------------
         // METODO POST PARA NUEVO DUCTO
         //--------------------------------------------------------------------------------------------------
         public async Task<DataResult<List<cat_ducto>>> NuevoDucto(cat_ducto ducto, List<cat_ducto> ListaDuctos)
         {
+
             DataResult<List<cat_ducto>> resultList = new DataResult<List<cat_ducto>>()
             {
                 Message = "Se agrego con exito",
@@ -117,6 +154,34 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             {
                 resultItem.Status = System.Net.HttpStatusCode.BadRequest;
             }
+
+            context.cat_ducto.Update(ducto);
+            await context.SaveChangesAsync();
+            await Task.CompletedTask;
+            return resultItem;
+
+        }
+
+        //--------------------------------------------------------------------------------------------------
+        //METODOS PUT PARA MODIFICAR ESTATUS DEL DUCTO
+        //--------------------------------------------------------------------------------------------------
+        public async Task<DataResult<cat_ducto>> ModificaEstatusDucto(cat_ducto ducto)
+        {
+            
+            DataResult<cat_ducto> resultItem = new DataResult<cat_ducto>()
+            {
+                Message = "Se agrego con exito",
+                Status = System.Net.HttpStatusCode.OK
+            };
+
+            var existeDucto = await context.cat_ducto.AnyAsync(x => x.id == ducto.id);
+            if (!existeDucto)
+            {
+                resultItem.Status = System.Net.HttpStatusCode.NotFound;
+            }
+
+            if (ducto.estatus == 1) ducto.estatus = 0;
+            else ducto.estatus = 1;
 
             context.cat_ducto.Update(ducto);
             await context.SaveChangesAsync();

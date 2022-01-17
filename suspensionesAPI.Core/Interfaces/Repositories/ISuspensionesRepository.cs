@@ -7,33 +7,33 @@ using System.Threading.Tasks;
 
 namespace SuspensionesAPI.Core.Interfaces.Repositories
 {
-    public interface IMotivoSuspensionRepository
+    public interface ISuspensionesRepository
     {
         //-------------------------------------------------------------------
         // metodos GET
         //------------------------------------------------------------------
         //Task<DataResultListas<cat_motivoSuspension>> ObtenerMotivosSuspension(List<cat_motivoSuspension> ListaMotivoSuspension);
-        Task<DataResultListas<cat_motivoSuspension>> ObtenerMotivosuspensionLogistica(List<cat_motivoSuspension> ListaMotivoSuspension);
-        Task<DataResult<cat_motivoSuspension>> ObtenerUnMotivoSuspension(int id);
+        Task<DataResultListas<suspensiones>> ObtenerSuspension(List<suspensiones> ListaSuspensiones);
+        Task<DataResult<suspensiones>> ObtenerUnaSuspension(int id);
 
 
 
-        //Task<DataResultListas<cat_motivoSuspension>> ObtenerMotivosuspensionLogistica(List<cat_motivoSuspension> ListaMotivoSuspensions)
+        //Task<DataResultListas<cat_motivoSuspension>> ObtenerSuspensionLogistica(List<cat_motivoSuspension> ListaMotivoSuspensions)
 
         //----------------------------------------------------------------------------------------------
         //Metodos POST
         //----------------------------------------------------------------------------------------------
-        Task<DataResult<List<cat_motivoSuspension>>> NuevoMotivoSuspension(cat_motivoSuspension motivoSuspension, List<cat_motivoSuspension> ListaMotivoSuspension);
+        Task<DataResult<List<suspensiones>>> NuevaSuspension(suspensiones suspensiones, List<suspensiones> ListaSuspensiones);
 
         //----------------------------------------------------------------------------------------------
         //Metodos PUT
         //----------------------------------------------------------------------------------------------
 
-        Task<DataResult<cat_motivoSuspension>> ModificaMotivoSuspension(int id, cat_motivoSuspension motivoSuspension);
+        Task<DataResult<suspensiones>> ModificaSuspension(int id, suspensiones suspensiones);
 
         //----------------------------------------------------------------------------------------------
         //Metodos DELETE
         //----------------------------------------------------------------------------------------------
-        Task<DataResult<cat_motivoSuspension>> BorrarMotivoSuspension(int id);
+        //Task<DataResult<suspensiones>> BorrarSuspension(int id);
     }
 }
