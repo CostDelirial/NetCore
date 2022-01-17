@@ -39,7 +39,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             try {
 
                 //asignacion y consulta de base de datos
-                ListaDuctos = await context.cat_ducto.ToListAsync();
+                ListaDuctos = await context.cat_ducto.OrderByDescending(x => x.estatus).ToListAsync();
                 resultItem.Data = ListaDuctos;
 
             }
@@ -165,7 +165,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
         //--------------------------------------------------------------------------------------------------
         //METODOS PUT PARA MODIFICAR ESTATUS DEL DUCTO
         //--------------------------------------------------------------------------------------------------
-        public async Task<DataResult<cat_ducto>> ModificaEstatusDucto(cat_ducto ducto)
+        public async Task<DataResult<cat_ducto>> ModificaEstatusDucto(int id)
         {
             
             DataResult<cat_ducto> resultItem = new DataResult<cat_ducto>()
@@ -174,12 +174,13 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                 Status = System.Net.HttpStatusCode.OK
             };
 
-            var existeDucto = await context.cat_ducto.AnyAsync(x => x.id == ducto.id);
+            var existeDucto = await context.cat_ducto.AnyAsync(x => x.id == id);
             if (!existeDucto)
             {
                 resultItem.Status = System.Net.HttpStatusCode.NotFound;
             }
 
+            cat_ducto ducto = await context.cat_ducto.FirstAsync(s => s.id == id);
             if (ducto.estatus == 1) ducto.estatus = 0;
             else ducto.estatus = 1;
 

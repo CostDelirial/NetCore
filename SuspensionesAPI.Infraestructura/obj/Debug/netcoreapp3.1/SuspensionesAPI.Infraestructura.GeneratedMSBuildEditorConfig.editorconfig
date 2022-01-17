@@ -1,7 +1,3 @@
 is_global = true
 build_property.RootNamespace = SuspensionesAPI.Infraestructura
-<<<<<<< HEAD
 build_property.ProjectDir = D:\Datos_Perfil\005084\Documents\NetCore\SuspensionesAPI.Infraestructura\
-=======
-build_property.ProjectDir = C:\Users\1080000405\Documents\NetCore\NetCore\SuspensionesAPI.Infraestructura\
->>>>>>> 91d60b8fb44931133e6ca2caed819cad3d0c9fa2

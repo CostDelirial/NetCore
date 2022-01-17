@@ -4,6 +4,7 @@ using SuspensionesAPI.Core.Interfaces.Repositories;
 using SuspensionesAPI.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +53,46 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             await Task.CompletedTask;
             return resultItem;
         }
+        //------------------------------------------------------------------------------------
+        //                          METODOS GET tablero
+        //------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------
+        //METODO GET RELACIONAL
+        //-------------------------------------------------------------------------------------------------
+        public async Task<DataResultListas<suspensiones>> ObtenerTablero(List<suspensiones> ListaSuspensiones)
+        {
+            DataResultListas<suspensiones> resultItem = new DataResultListas<suspensiones>()
+            {
 
+                Message = "Lista Cargada",
+                Status = System.Net.HttpStatusCode.OK
+            };
+            try
+            {
+                var ListaSuspensiones1 = context.suspensiones
+                    .GroupBy(x => x.ductoId)
+                    .Select(g => g.Max(z => z.id))
+                    .ToList();
+                String maximos = "0";
+                for (int i = 0; i < ListaSuspensiones1.LongCount(); i++)
+                    maximos = maximos + "," + ListaSuspensiones1[i].ToString();
+
+                ListaSuspensiones = await context.suspensiones
+                    .Include(x => x.ducto)
+                    .Include(x => x.motivoSuspension)
+                    .Where(x => maximos.Contains(x.id.ToString()) && x.ducto.estatus == 1)
+                    .ToListAsync();
+                resultItem.Data = ListaSuspensiones;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                resultItem.Message = "Ocurrio un error";
+                resultItem.Status = System.Net.HttpStatusCode.NotFound;
+            }
+            await Task.CompletedTask;
+            return resultItem;
+        }
         public async Task<DataResult<suspensiones>> ObtenerUnaSuspension(int id)
         {
             DataResult<suspensiones> resultItem = new DataResult<suspensiones>()

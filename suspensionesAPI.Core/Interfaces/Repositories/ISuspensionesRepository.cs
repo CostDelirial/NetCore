@@ -16,7 +16,11 @@ namespace SuspensionesAPI.Core.Interfaces.Repositories
         Task<DataResultListas<suspensiones>> ObtenerSuspension(List<suspensiones> ListaSuspensiones);
         Task<DataResult<suspensiones>> ObtenerUnaSuspension(int id);
 
-
+        //-------------------------------------------------------------------
+        // metodos GET tablero
+        //------------------------------------------------------------------
+        //Task<DataResultListas<cat_motivoSuspension>> ObtenerMotivosSuspension(List<cat_motivoSuspension> ListaMotivoSuspension);
+        Task<DataResultListas<suspensiones>> ObtenerTablero(List<suspensiones> ListaSuspensiones);
 
         //Task<DataResultListas<cat_motivoSuspension>> ObtenerSuspensionLogistica(List<cat_motivoSuspension> ListaMotivoSuspensions)
 
