@@ -43,6 +43,25 @@ namespace SuspensionesAPI.Controllers
             }
         }
 
+        //--------------------------------------------------------------------------------------------------------
+        //                                  METODOS tablero de control
+        //--------------------------------------------------------------------------------------------------------
+        [HttpGet("tablero")]
+        [ProducesResponseType(typeof(DataResultListas<suspensiones>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ObtenerTablero()
+        {
+            var res = await _suspensionesRepository.ObtenerTablero(ListaSuspensiones);
+            if (res.Status == System.Net.HttpStatusCode.OK)
+            {
+                return Ok(res);
+            }
+            else
+            {
+                return Problem(null, null, 400, "Error en la MATRIX", null);
+            }
+        }
 
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(DataResult<suspensiones>), StatusCodes.Status200OK)]

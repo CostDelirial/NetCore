@@ -160,14 +160,14 @@ namespace SuspensionesAPI.Controllers
         //---------------------------------------------------------------------------------------------
         //metodos PUT para estatus DUCTOS
         //---------------------------------------------------------------------------------------------
-        [HttpPut("Estatus{id:int}")]
+        [HttpPut("Estatus/{id:int}")]
         [ProducesResponseType(typeof(DataResult<int>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ModificaEstatusDucto(cat_ducto ducto)
+        public async Task<IActionResult> ModificaEstatusDucto(int id)
         {
             
-            var res = await _ductoRepository.ModificaEstatusDucto(ducto);
+            var res = await _ductoRepository.ModificaEstatusDucto(id);
 
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
