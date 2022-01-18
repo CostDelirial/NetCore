@@ -10,6 +10,7 @@ namespace SuspensionesAPI.Core.Models
         public int id { get; set; }
         public string estatus { get; set; }
         public DateTime fechaHora { get; set; }
+        public int duracion { get; set; }
         public string observaciones { get; set; }
         public double km { get; set; }
         public int bph { get; set; }

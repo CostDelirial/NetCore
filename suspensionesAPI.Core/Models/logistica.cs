@@ -13,8 +13,6 @@ namespace suspensionesAPI.Core.Models
         public int id { get; set; }
         [Required(ErrorMessage = "EL nombre del {0} es obligatorio")]
         public string nombre { get; set; }
-
- 
         public List<cat_motivoSuspension> cat_motivoSuspension { get; set; }
     }
 }

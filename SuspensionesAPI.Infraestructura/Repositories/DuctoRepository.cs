@@ -54,7 +54,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             await Task.CompletedTask;
             return resultItem; //retorno de valor Data resulta a la repsuesta de DuctoCOntroller
         }
-
+        
         //--------------------------------------------------------------------------------------------------
         // METODO GET PARA OBTENER UN DUCTOS
         //--------------------------------------------------------------------------------------------------
@@ -99,7 +99,10 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             {
 
                 //asignacion y consulta de base de datos
-                ListaDuctos = await context.cat_ducto.Where(s => s.estatus == 1).ToListAsync();
+                ListaDuctos = await context.cat_ducto
+                    .Where(s => s.estatus == 1)
+                    .OrderByDescending(s => s.nombre)
+                    .ToListAsync();
                 resultItem.Data = ListaDuctos;
 
             }

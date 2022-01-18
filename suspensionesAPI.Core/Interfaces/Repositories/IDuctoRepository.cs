@@ -14,6 +14,8 @@ namespace SuspensionesAPI.Core.Interfaces.Repositories
         //Metodos GET
         //----------------------------------------------------------------------------------------------
         Task<DataResultListas<cat_ducto>> ObtenerDuctos(List<cat_ducto> ListaDuctos);
+
+      
         Task<DataResultListas<cat_ducto>> ObtenerDuctosActivos(List<cat_ducto> ListaDuctos);
 
        
