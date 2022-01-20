@@ -4,6 +4,7 @@ using SuspensionesAPI.Core.Interfaces.Repositories;
 using SuspensionesAPI.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -125,11 +126,43 @@ namespace SuspensionesAPI.Infraestructura.Repositories
         //-----------------------------------------------------------------------------------------------------
         public async Task<DataResult<List<suspensiones>>> NuevaSuspension(suspensiones suspension, List<suspensiones> ListaSuspension)
         {
+            suspension.seregistro = DateTime.Now;
             DataResult<List<suspensiones>> resultList = new DataResult<List<suspensiones>>()
             {
                 Message = "Se agrego con exito",
                 Status = System.Net.HttpStatusCode.OK
             };
+            var ducto = suspension.ductoId;
+            var fechaNueva = suspension.fechaHora;
+            var tipoEstatus = suspension.estatus;
+
+            if(tipoEstatus == "SUSPENDIDO")
+            {
+                tipoEstatus = "REANUDACION";
+            }
+            else
+            {
+                tipoEstatus = "SUSPENDIDO";
+            }
+
+            
+            var idViejo = context.suspensiones
+                    .Where(x => x.ductoId == ducto && x.estatus == tipoEstatus)
+                    .Max(x => x.id);
+
+            var fechaVieja = context.suspensiones
+                .Where(x => x.id == idViejo && x.estatus == tipoEstatus)
+                .Select(x => x.fechaHora).FirstOrDefault();
+
+            var duracion = fechaNueva - fechaVieja;
+
+            var query = await context.suspensiones
+                        .Where(q => q.id == idViejo).ToListAsync();
+
+            foreach (suspensiones q in query)
+                        q.duracion = duracion.TotalHours;
+            //q.duracion = Convert.ToDouble(duracion.TotalHours.ToString("N"));    
+            context.SaveChanges();
 
             context.suspensiones.Add(suspension);
             await context.SaveChangesAsync();
