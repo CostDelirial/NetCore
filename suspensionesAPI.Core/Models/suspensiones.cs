@@ -16,6 +16,7 @@ namespace SuspensionesAPI.Core.Models
         public int bph { get; set; }
         public int bls { get; set; }
         public DateTime seregistro { get; set; }
+        public int corte { get; set; }
 //----------------------------------------------------------------------------------------------------------
 //                                      LLAVES FORANEAS
 //----------------------------------------------------------------------------------------------------------

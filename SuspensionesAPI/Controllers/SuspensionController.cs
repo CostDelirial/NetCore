@@ -157,5 +157,26 @@ namespace SuspensionesAPI.Controllers
 
         }
 
+        //--------------------------------------------------------------------------------------------------------
+        //                                  METODOS ZIETE PARTICULAR
+        //--------------------------------------------------------------------------------------------------------
+        [HttpGet("zieteParticular/{fechaInicio:DateTime}/{fechaFinal:DateTime}/{ductoid:int}")]
+        [ProducesResponseType(typeof(DataResultListas<suspensiones>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ObtenerZieteParticular(DateTime fechaInicio,DateTime fechaFinal,int ductoid)
+        {
+            
+            var res = await _suspensionesRepository.ObtenerZieteParticular(fechaInicio,fechaFinal,ductoid,ListaSuspensiones);
+            if (res.Status == System.Net.HttpStatusCode.OK)
+            {
+                return Ok(res);
+            }
+            else
+            {
+                return Problem(null, null, 400, "Error en la MATRIX", null);
+            }
+        }
+
     }
 }

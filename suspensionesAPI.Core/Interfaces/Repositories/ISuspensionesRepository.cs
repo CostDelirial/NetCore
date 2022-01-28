@@ -39,5 +39,12 @@ namespace SuspensionesAPI.Core.Interfaces.Repositories
         //Metodos DELETE
         //----------------------------------------------------------------------------------------------
         //Task<DataResult<suspensiones>> BorrarSuspension(int id);
+
+
+        //--------------------------------------------------------------------------------------------------------
+        //                                  METODOS ZIETE PARTICULAR
+        //--------------------------------------------------------------------------------------------------------
+     
+        Task<DataResultListas<suspensiones>> ObtenerZieteParticular(DateTime fechaInicio, DateTime fechaFinal, int ductoId, List<suspensiones> ListaSuspensiones);
     }
 }

@@ -132,44 +132,150 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                 Message = "Se agrego con exito",
                 Status = System.Net.HttpStatusCode.OK
             };
+
             var ducto = suspension.ductoId;
             var fechaNueva = suspension.fechaHora;
-            var tipoEstatus = suspension.estatus;
-
-            if(tipoEstatus == "SUSPENDIDO")
-            {
-                tipoEstatus = "REANUDACION";
-            }
-            else
-            {
-                tipoEstatus = "SUSPENDIDO";
-            }
-
-            
-            var idViejo = context.suspensiones
-                    .Where(x => x.ductoId == ducto && x.estatus == tipoEstatus)
-                    .Max(x => x.id);
-
-            var fechaVieja = context.suspensiones
-                .Where(x => x.id == idViejo && x.estatus == tipoEstatus)
-                .Select(x => x.fechaHora).FirstOrDefault();
-
+            var idViejo = context.suspensiones.Where(x => x.ductoId == ducto).Max(x => x.id);
+            var fechaVieja = context.suspensiones.Where(x => x.id == idViejo).Select(x => x.fechaHora).FirstOrDefault();
             var duracion = fechaNueva - fechaVieja;
+            var auxiliar = duracion.TotalHours;
 
-            var query = await context.suspensiones
-                        .Where(q => q.id == idViejo).ToListAsync();
 
-            foreach (suspensiones q in query)
-                        q.duracion = duracion.TotalHours;
-            //q.duracion = Convert.ToDouble(duracion.TotalHours.ToString("N"));    
-            context.SaveChanges();
+            for (int i = 0; i < duracion.TotalHours; i += 24)
+            {
+                auxiliar = duracion.TotalHours - i;
+                if (auxiliar < 24)
+                {
+                    if( fechaNueva.TimeOfDay.Hours > 5)
+                    {
+                        var idViejoAuxiliar = context.suspensiones
+                    .Where(x => x.ductoId == ducto)
+                    .Max(x => x.id);
+                        var query = await context.suspensiones
+                            .Where(q => q.id == idViejoAuxiliar).ToListAsync();
+                        var fechaVieja2 = fechaNueva;
+                        var fechaNuevaAuxiliar = fechaNueva;
+                        var duracionAuxiliar = duracion;
+                        foreach (suspensiones q in query)
+                        {
+                            fechaVieja2 = q.fechaHora;
+                            fechaNuevaAuxiliar = q.fechaHora.Date.AddHours(5);
+                            duracionAuxiliar = fechaNuevaAuxiliar - fechaVieja2;
+                            // ACTUALIZACION DEL ULTIMO REGISTRO
+                           
+                                
+                                q.seregistro = DateTime.Now;
+                                q.duracion = duracionAuxiliar.TotalHours;
+                            if (q.duracion < 0)
+                                q.duracion = 24 + q.duracion;
+                            await context.SaveChangesAsync();
+                           
+                           
 
-            context.suspensiones.Add(suspension);
-            await context.SaveChangesAsync();
-            await Task.CompletedTask;
+                            // INSERTAR NUEVO REGISTRO CON CORTE
+                            if( q.observaciones != "CORTE")
+                            {
+                                
+                                q.id = q.id + 1;
+                                q.observaciones = "CORTE RAMCES";
+                                q.motivoSuspensionId = 666;
+                                if(fechaNuevaAuxiliar < fechaVieja2)
+                                {
+                                    fechaNuevaAuxiliar = fechaNuevaAuxiliar.AddDays(1);
+                                }
+                                q.fechaHora = fechaNuevaAuxiliar;
+                                q.duracion = fechaNueva.TimeOfDay.Hours - fechaNuevaAuxiliar.TimeOfDay.Hours;
+                                if (q.duracion < 0)
+                                    q.duracion = 24 + q.duracion;
+                                context.suspensiones.Add(q);
+                                await context.SaveChangesAsync();
+                                await Task.CompletedTask;
+                            }
+                           
+                        }
+
+                        idViejo = context.suspensiones
+                    .Where(x => x.ductoId == ducto)
+                    .Max(x => x.id);
+                        var idviejoFinal = idViejo + 1;
+                        var query2 = await context.suspensiones
+                            .Where(q => q.id == idViejo).ToListAsync();
+
+                        foreach (suspensiones q in query2)
+                        {
+                            q.duracion = (fechaNueva.TimeOfDay.TotalMinutes / 60) - (q.fechaHora.TimeOfDay.TotalMinutes / 60);
+                            if (q.duracion < 0)
+                                q.duracion = 24 + q.duracion;
+
+                        }
+
+                        context.SaveChanges();
+                        suspension.id = idviejoFinal;
+                        context.suspensiones.Add(suspension);
+                        await context.SaveChangesAsync();
+                        await Task.CompletedTask;
+                        return resultList;
+                    }
+                    else
+                    {
+                        idViejo = context.suspensiones
+                    .Where(x => x.ductoId == ducto)
+                    .Max(x => x.id);
+                        var idviejoFinal = idViejo + 1;
+                        var query = await context.suspensiones
+                            .Where(q => q.id == idViejo).ToListAsync();
+
+                        foreach (suspensiones q in query)
+                        {
+                            q.duracion = (fechaNueva.TimeOfDay.TotalMinutes / 60) - (q.fechaHora.TimeOfDay.TotalMinutes / 60);
+                            if (q.duracion < 0)
+                                q.duracion = 24 + q.duracion;
+
+                        }
+
+                        context.SaveChanges();
+                        suspension.id = idviejoFinal;
+                        context.suspensiones.Add(suspension);
+                        await context.SaveChangesAsync();
+                        await Task.CompletedTask;
+                        return resultList;
+                    }
+                    
+                }
+                else
+                {
+                    var idViejoAuxiliar = context.suspensiones
+                    .Where(x => x.ductoId == ducto)
+                    .Max(x => x.id);
+                    var query = await context.suspensiones
+                        .Where(q => q.id == idViejoAuxiliar).ToListAsync();
+                    foreach (suspensiones q in query)
+                    {
+                        // ACTUALIZACION DEL ULTIMO REGISTRO
+                        var fechaVieja2 = q.fechaHora;
+                        var fechaNuevaAuxiliar = q.fechaHora.Date.AddDays(1).AddHours(5);
+                        var duracionAuxiliar = fechaNuevaAuxiliar - fechaVieja2;
+                        q.seregistro = DateTime.Now;
+                        q.duracion = duracionAuxiliar.TotalHours;
+                        if (q.duracion < 0)
+                            q.duracion = 24 + q.duracion;
+                        await context.SaveChangesAsync();
+
+                        // INSERTAR NUEVO REGISTRO CON CORTE
+                        q.observaciones = "CORTE";
+                        q.motivoSuspensionId = 666;
+                        q.duracion = 0.0;
+                        q.id = q.id + 1;
+                        q.fechaHora = fechaNuevaAuxiliar;
+                        q.duracion = 24;
+                        context.suspensiones.Add(q);
+                        await context.SaveChangesAsync();
+                        await Task.CompletedTask;
+                    }
+                }
+            }
             return resultList;
         }
-
         //-------------------------------------------------------------------------------------------------------
         //                     METODO MODIFICAR
         //------------------------------------------------------------------------------------------------------
@@ -199,6 +305,58 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
         }
 
-    }
+    
 
+    //------------------------------------------------------------------------------------
+    //                          METODOS GET
+    //------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
+    //METODO GET ZIETE PARTICULAR
+    //-------------------------------------------------------------------------------------------------
+    public async Task<DataResultListas<suspensiones>> ObtenerZieteParticular(DateTime fechaInicio,DateTime fechaFinal, int ductoid,List<suspensiones> ListaSuspensiones)
+    {
+           
+
+            DataResultListas<suspensiones> resultItem = new DataResultListas<suspensiones>()
+        {
+
+            Message = "Lista Cargada",
+            Status = System.Net.HttpStatusCode.OK
+        };
+        try
+        {
+                fechaInicio = fechaInicio.AddHours(5);
+                fechaFinal = fechaFinal.AddDays(1).AddHours(4).AddMinutes(59);
+
+                //  MOTIVOS NO LOGISTICOS
+                ListaSuspensiones = await context.suspensiones
+                     .Include(x => x.ducto)
+                     .Include(x => x.motivoSuspension)
+                     .Where(x => x.motivoSuspension.id != 28
+                     && x.fechaHora >= fechaInicio
+                     && x.fechaHora <= fechaFinal
+                     && x.ductoId == ductoid)
+                     .GroupBy(x => new { x.motivoSuspension.id, x.motivoSuspension.nombre, x.motivoSuspension.logisticaid})
+                        .Select(cl => new suspensiones
+                        {
+                            observaciones = cl.Key.nombre.ToString(), //MOTIVO DE SUSPENSION
+                           bph = cl.Key.id, //ID DEL MOTIVO DE SUSPENSION
+                           bls = cl.Key.logisticaid, // IDENTIFICADOR DE LOGISTICA
+                           km = cl.Sum( c => c.corte), //CONCURRENCIA
+                            duracion = cl.Sum(c => c.duracion), //DURACION                        
+                       })
+                     .ToListAsync();
+                resultItem.Data = ListaSuspensiones;
+
+            }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            resultItem.Message = "Ocurrio un error";
+            resultItem.Status = System.Net.HttpStatusCode.NotFound;
+        }
+        await Task.CompletedTask;
+        return resultItem;
+    }
+    }
 }
