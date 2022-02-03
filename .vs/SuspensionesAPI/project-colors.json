@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "32292ab2-2859-4792-8b45-63c72ec3607d": {
+      "ProjectGuid": "32292ab2-2859-4792-8b45-63c72ec3607d",
+      "DisplayName": "SuspensionesAPI.Core",
+      "ColorIndex": 0
+    },
+    "608fadf4-4541-4a45-a461-e72c2a90431d": {
+      "ProjectGuid": "608fadf4-4541-4a45-a461-e72c2a90431d",
+      "DisplayName": "SuspensionesAPI",
+      "ColorIndex": 1
+    },
+    "1f96b541-29d7-4764-99fb-6554903b3dfc": {
+      "ProjectGuid": "1f96b541-29d7-4764-99fb-6554903b3dfc",
+      "DisplayName": "SuspensionesAPI.Infraestructura",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

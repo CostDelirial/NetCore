@@ -126,155 +126,118 @@ namespace SuspensionesAPI.Infraestructura.Repositories
         //-----------------------------------------------------------------------------------------------------
         public async Task<DataResult<List<suspensiones>>> NuevaSuspension(suspensiones suspension, List<suspensiones> ListaSuspension)
         {
-            suspension.seregistro = DateTime.Now;
+            
             DataResult<List<suspensiones>> resultList = new DataResult<List<suspensiones>>()
             {
                 Message = "Se agrego con exito",
                 Status = System.Net.HttpStatusCode.OK
             };
+            //guardar datos del usuario
+            suspensiones datosGUI = suspension;
+            var fechaAux = suspension.fechaHora;
 
-            var ducto = suspension.ductoId;
-            var fechaNueva = suspension.fechaHora;
-            var idViejo = context.suspensiones.Where(x => x.ductoId == ducto).Max(x => x.id);
-            var fechaVieja = context.suspensiones.Where(x => x.id == idViejo).Select(x => x.fechaHora).FirstOrDefault();
-            var duracion = fechaNueva - fechaVieja;
-            var auxiliar = duracion.TotalHours;
+            // variable para calcular la duración
+            var duracion = 0.00;
+            //seleccionar ultimo id de un ducto
+            var ultimoRegistroId = context.suspensiones.Where(x => x.ductoId == datosGUI.ductoId).Max(x => x.id);
+            //seleccioar el registro viejo para modificar la duracion del mismo
+            var query = await context.suspensiones.Where(q => q.id == ultimoRegistroId).ToListAsync();
+
+            //variable para asignar fecha de corte de 5:00am
+            var fechaRegistroCorte = DateTime.Now;
+
+            //se revisa si el ultimo regisro ya tiene un corte a las 5:00
+            var fechaUltimoRegistro = context.suspensiones.Where(x => x.id == ultimoRegistroId).Select(x => x.fechaHora).FirstOrDefault();
 
 
-            for (int i = 0; i < duracion.TotalHours; i += 24)
+            var vueltas = datosGUI.fechaHora.DayOfYear - fechaUltimoRegistro.DayOfYear + 2;
+            for ( var i = 0;i <= vueltas; i++)
             {
-                auxiliar = duracion.TotalHours - i;
-                if (auxiliar < 24)
+                ultimoRegistroId = context.suspensiones.Where(x => x.ductoId == datosGUI.ductoId).Max(x => x.id);
+                query = await context.suspensiones.Where(q => q.id == ultimoRegistroId).ToListAsync();
+                fechaUltimoRegistro = context.suspensiones.Where(x => x.id == ultimoRegistroId).Select(x => x.fechaHora).FirstOrDefault();
+
+                if ( (fechaUltimoRegistro.TimeOfDay.Hours == 5 && fechaUltimoRegistro.TimeOfDay.Minutes == 0
+                    && fechaUltimoRegistro.Date == fechaAux.Date ) || (fechaUltimoRegistro.Date == fechaAux.Date && fechaUltimoRegistro.TimeOfDay.Hours > 5))
                 {
-                    if( fechaNueva.TimeOfDay.Hours > 5)
-                    {
-                        var idViejoAuxiliar = context.suspensiones
-                    .Where(x => x.ductoId == ducto)
-                    .Max(x => x.id);
-                        var query = await context.suspensiones
-                            .Where(q => q.id == idViejoAuxiliar).ToListAsync();
-                        var fechaVieja2 = fechaNueva;
-                        var fechaNuevaAuxiliar = fechaNueva;
-                        var duracionAuxiliar = duracion;
-                        foreach (suspensiones q in query)
-                        {
-                            fechaVieja2 = q.fechaHora;
-                            fechaNuevaAuxiliar = q.fechaHora.Date.AddHours(5);
-                            duracionAuxiliar = fechaNuevaAuxiliar - fechaVieja2;
-                            // ACTUALIZACION DEL ULTIMO REGISTRO
-                           
-                                
-                                q.seregistro = DateTime.Now;
-                                q.duracion = duracionAuxiliar.TotalHours;
-                            if (q.duracion < 0)
-                                q.duracion = 24 + q.duracion;
-                            await context.SaveChangesAsync();
-                           
-                           
-
-                            // INSERTAR NUEVO REGISTRO CON CORTE
-                            if( q.observaciones != "CORTE")
-                            {
-                                
-                                q.id = q.id + 1;
-                                q.observaciones = "CORTE RAMCES";
-                                q.motivoSuspensionId = 666;
-                                if(fechaNuevaAuxiliar < fechaVieja2)
-                                {
-                                    fechaNuevaAuxiliar = fechaNuevaAuxiliar.AddDays(1);
-                                }
-                                q.fechaHora = fechaNuevaAuxiliar;
-                                q.duracion = fechaNueva.TimeOfDay.Hours - fechaNuevaAuxiliar.TimeOfDay.Hours;
-                                if (q.duracion < 0)
-                                    q.duracion = 24 + q.duracion;
-                                context.suspensiones.Add(q);
-                                await context.SaveChangesAsync();
-                                await Task.CompletedTask;
-                            }
-                           
-                        }
-
-                        idViejo = context.suspensiones
-                    .Where(x => x.ductoId == ducto)
-                    .Max(x => x.id);
-                        var idviejoFinal = idViejo + 1;
-                        var query2 = await context.suspensiones
-                            .Where(q => q.id == idViejo).ToListAsync();
-
-                        foreach (suspensiones q in query2)
-                        {
-                            q.duracion = (fechaNueva.TimeOfDay.TotalMinutes / 60) - (q.fechaHora.TimeOfDay.TotalMinutes / 60);
-                            if (q.duracion < 0)
-                                q.duracion = 24 + q.duracion;
-
-                        }
-
-                        context.SaveChanges();
-                        suspension.id = idviejoFinal;
-                        context.suspensiones.Add(suspension);
-                        await context.SaveChangesAsync();
-                        await Task.CompletedTask;
-                        return resultList;
-                    }
-                    else
-                    {
-                        idViejo = context.suspensiones
-                    .Where(x => x.ductoId == ducto)
-                    .Max(x => x.id);
-                        var idviejoFinal = idViejo + 1;
-                        var query = await context.suspensiones
-                            .Where(q => q.id == idViejo).ToListAsync();
-
-                        foreach (suspensiones q in query)
-                        {
-                            q.duracion = (fechaNueva.TimeOfDay.TotalMinutes / 60) - (q.fechaHora.TimeOfDay.TotalMinutes / 60);
-                            if (q.duracion < 0)
-                                q.duracion = 24 + q.duracion;
-
-                        }
-
-                        context.SaveChanges();
-                        suspension.id = idviejoFinal;
-                        context.suspensiones.Add(suspension);
-                        await context.SaveChangesAsync();
-                        await Task.CompletedTask;
-                        return resultList;
-                    }
-                    
-                }
-                else
-                {
-                    var idViejoAuxiliar = context.suspensiones
-                    .Where(x => x.ductoId == ducto)
-                    .Max(x => x.id);
-                    var query = await context.suspensiones
-                        .Where(q => q.id == idViejoAuxiliar).ToListAsync();
+                    duracion = fechaAux.TimeOfDay.TotalHours - fechaUltimoRegistro.TimeOfDay.TotalHours;
+                    //se agregan valores a la suspension antigua para modificar la duracion
                     foreach (suspensiones q in query)
                     {
-                        // ACTUALIZACION DEL ULTIMO REGISTRO
-                        var fechaVieja2 = q.fechaHora;
-                        var fechaNuevaAuxiliar = q.fechaHora.Date.AddDays(1).AddHours(5);
-                        var duracionAuxiliar = fechaNuevaAuxiliar - fechaVieja2;
                         q.seregistro = DateTime.Now;
-                        q.duracion = duracionAuxiliar.TotalHours;
+                        q.duracion = duracion;
+                        await context.SaveChangesAsync();
+                    }
+
+                    //insertar el nuevo registro dle usuario por medio de formulario GUI
+                    suspension.corte = 1;
+                    suspension.fechaHora = fechaAux;
+                    suspension.id = 0;
+                    suspension.observaciones = "if";
+                    suspension.duracion = 0;
+                    context.suspensiones.Add(suspension);
+                    await context.SaveChangesAsync();
+                    await Task.CompletedTask;
+                    return resultList;
+                }
+                
+                else if (datosGUI.fechaHora.TimeOfDay.Hours < 5) {
+                    duracion = datosGUI.fechaHora.TimeOfDay.TotalHours - fechaUltimoRegistro.TimeOfDay.TotalHours;
+                    
+                    foreach (suspensiones q in query)
+                    {
+                        q.seregistro = DateTime.Now;
+                        q.duracion = duracion;
                         if (q.duracion < 0)
                             q.duracion = 24 + q.duracion;
+
+                        await context.SaveChangesAsync();
+                    }
+
+                    datosGUI.id = 0;
+                    datosGUI.seregistro = DateTime.Now;
+                    datosGUI.observaciones = "else if";
+                    datosGUI.corte = 1;
+                    context.suspensiones.Add(datosGUI);
+                    await context.SaveChangesAsync();
+                    await Task.CompletedTask;
+                    return resultList;
+
+                }
+                else{
+                    if(datosGUI.fechaHora.TimeOfDay.Hours >= 5 && fechaUltimoRegistro.Date != fechaAux.Date)
+                        fechaRegistroCorte = fechaUltimoRegistro.Date.AddDays(1).AddHours(5);
+                    else
+                        fechaRegistroCorte = fechaUltimoRegistro.Date.AddHours(5);
+
+                    foreach (suspensiones q in query)
+                    {
+                        q.seregistro = DateTime.Now;
+                        q.duracion = 5 - fechaUltimoRegistro.TimeOfDay.TotalHours;
+                        if (q.duracion == 0)
+                            q.duracion = 24;
+
+                        if (q.duracion < 0)
+                            q.duracion = 24 + q.duracion;
+                        
                         await context.SaveChangesAsync();
 
-                        // INSERTAR NUEVO REGISTRO CON CORTE
-                        q.observaciones = "CORTE";
-                        q.motivoSuspensionId = 666;
-                        q.duracion = 0.0;
-                        q.id = q.id + 1;
-                        q.fechaHora = fechaNuevaAuxiliar;
-                        q.duracion = 24;
-                        context.suspensiones.Add(q);
-                        await context.SaveChangesAsync();
-                        await Task.CompletedTask;
                     }
+                    datosGUI.id = 0;
+                    datosGUI.fechaHora = fechaRegistroCorte;
+                    datosGUI.observaciones = "CORTE";
+                    datosGUI.corte = 0;
+                    context.suspensiones.Add(datosGUI);
+                    await context.SaveChangesAsync();
+                   
+                    
                 }
             }
+
+
+
             return resultList;
+
         }
         //-------------------------------------------------------------------------------------------------------
         //                     METODO MODIFICAR
