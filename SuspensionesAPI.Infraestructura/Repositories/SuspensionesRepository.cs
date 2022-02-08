@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SuspensionesAPI.Infraestructura.Repositories
 {
-    public class SuspensionesRepository: ISuspensionesRepository
+    public class SuspensionesRepository : ISuspensionesRepository
     {
         private readonly ApiDbContext context;
 
@@ -41,6 +41,8 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                     .Include(x => x.motivoSuspension)
                     .ThenInclude(z => z.logistica)
                     .Include(x => x.personalCC)
+                    .Where(x => x.corte == 1)
+                    .OrderByDescending(x => x.seregistro)
                     .ToListAsync();
                 resultItem.Data = ListaSuspensiones;
 
@@ -126,7 +128,7 @@ namespace SuspensionesAPI.Infraestructura.Repositories
         //-----------------------------------------------------------------------------------------------------
         public async Task<DataResult<List<suspensiones>>> NuevaSuspension(suspensiones suspension, List<suspensiones> ListaSuspension)
         {
-            
+
             DataResult<List<suspensiones>> resultList = new DataResult<List<suspensiones>>()
             {
                 Message = "Se agrego con exito",
@@ -135,6 +137,8 @@ namespace SuspensionesAPI.Infraestructura.Repositories
             //guardar datos del usuario
             suspensiones datosGUI = suspension;
             var fechaAux = suspension.fechaHora;
+            var motivoGuardado = suspension.estatus; ;
+            var motivoGuardadoId = suspension.motivoSuspensionId;
 
             // variable para calcular la duración
             var duracion = 0.00;
@@ -151,14 +155,15 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
 
             var vueltas = datosGUI.fechaHora.DayOfYear - fechaUltimoRegistro.DayOfYear + 2;
-            for ( var i = 0;i <= vueltas; i++)
+            for (var i = 0; i <= vueltas; i++)
             {
                 ultimoRegistroId = context.suspensiones.Where(x => x.ductoId == datosGUI.ductoId).Max(x => x.id);
                 query = await context.suspensiones.Where(q => q.id == ultimoRegistroId).ToListAsync();
                 fechaUltimoRegistro = context.suspensiones.Where(x => x.id == ultimoRegistroId).Select(x => x.fechaHora).FirstOrDefault();
 
-                if ( (fechaUltimoRegistro.TimeOfDay.Hours == 5 && fechaUltimoRegistro.TimeOfDay.Minutes == 0
-                    && fechaUltimoRegistro.Date == fechaAux.Date ) || (fechaUltimoRegistro.Date == fechaAux.Date && fechaUltimoRegistro.TimeOfDay.Hours > 5))
+                if ((fechaUltimoRegistro.TimeOfDay.Hours == 5 && fechaUltimoRegistro.TimeOfDay.Minutes == 0
+                    && fechaUltimoRegistro.Date == fechaAux.Date) || (fechaUltimoRegistro.Date == fechaAux.Date && fechaUltimoRegistro.TimeOfDay.TotalHours > 5)
+                    || (fechaUltimoRegistro.Date == (fechaAux.Date.AddDays(-1)) && fechaAux.TimeOfDay.Hours < 5))
                 {
                     duracion = fechaAux.TimeOfDay.TotalHours - fechaUltimoRegistro.TimeOfDay.TotalHours;
                     //se agregan valores a la suspension antigua para modificar la duracion
@@ -175,15 +180,17 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                     suspension.id = 0;
                     suspension.observaciones = "if";
                     suspension.duracion = 0;
+                    suspension.estatus = motivoGuardado;
+                    suspension.motivoSuspensionId = motivoGuardadoId;
                     context.suspensiones.Add(suspension);
                     await context.SaveChangesAsync();
                     await Task.CompletedTask;
                     return resultList;
                 }
-                
+                //se registran los datos ingresado por el usuario menores a 5 horas de la mañana 
                 else if (datosGUI.fechaHora.TimeOfDay.Hours < 5) {
                     duracion = datosGUI.fechaHora.TimeOfDay.TotalHours - fechaUltimoRegistro.TimeOfDay.TotalHours;
-                    
+
                     foreach (suspensiones q in query)
                     {
                         q.seregistro = DateTime.Now;
@@ -204,12 +211,16 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                     return resultList;
 
                 }
-                else{
-                    if(datosGUI.fechaHora.TimeOfDay.Hours >= 5 && fechaUltimoRegistro.Date != fechaAux.Date)
+                else {
+
+
+                    //se registra un corte con 24 hrs si es mayor a 5 am y es difernete a la fecha registrada del usuario
+                    if (datosGUI.fechaHora.TimeOfDay.Hours >= 5 && fechaUltimoRegistro.Date != fechaAux.Date)
                         fechaRegistroCorte = fechaUltimoRegistro.Date.AddDays(1).AddHours(5);
                     else
                         fechaRegistroCorte = fechaUltimoRegistro.Date.AddHours(5);
-
+                    var motivoArrastrado = "";
+                    var motivoArrastradoId = 0;
                     foreach (suspensiones q in query)
                     {
                         q.seregistro = DateTime.Now;
@@ -219,18 +230,24 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
                         if (q.duracion < 0)
                             q.duracion = 24 + q.duracion;
-                        
+
+                        motivoArrastrado = q.estatus;
+                        motivoArrastradoId = q.motivoSuspensionId;
                         await context.SaveChangesAsync();
 
                     }
+
+                    datosGUI.motivoSuspensionId = motivoArrastradoId;
+                    datosGUI.estatus = motivoArrastrado;
                     datosGUI.id = 0;
                     datosGUI.fechaHora = fechaRegistroCorte;
                     datosGUI.observaciones = "CORTE";
                     datosGUI.corte = 0;
                     context.suspensiones.Add(datosGUI);
                     await context.SaveChangesAsync();
-                   
-                    
+
+
+
                 }
             }
 
@@ -268,26 +285,26 @@ namespace SuspensionesAPI.Infraestructura.Repositories
 
         }
 
-    
 
-    //------------------------------------------------------------------------------------
-    //                          METODOS GET
-    //------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------
-    //METODO GET ZIETE PARTICULAR
-    //-------------------------------------------------------------------------------------------------
-    public async Task<DataResultListas<suspensiones>> ObtenerZieteParticular(DateTime fechaInicio,DateTime fechaFinal, int ductoid,List<suspensiones> ListaSuspensiones)
-    {
-           
+
+        //------------------------------------------------------------------------------------
+        //                          METODOS GET
+        //------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------
+        //METODO GET ZIETE PARTICULAR
+        //-------------------------------------------------------------------------------------------------
+        public async Task<DataResultListas<suspensiones>> ObtenerZieteParticular(DateTime fechaInicio, DateTime fechaFinal, int ductoid, List<suspensiones> ListaSuspensiones)
+        {
+
 
             DataResultListas<suspensiones> resultItem = new DataResultListas<suspensiones>()
-        {
+            {
 
-            Message = "Lista Cargada",
-            Status = System.Net.HttpStatusCode.OK
-        };
-        try
-        {
+                Message = "Lista Cargada",
+                Status = System.Net.HttpStatusCode.OK
+            };
+            try
+            {
                 fechaInicio = fechaInicio.AddHours(5);
                 fechaFinal = fechaFinal.AddDays(1).AddHours(4).AddMinutes(59);
 
@@ -299,27 +316,151 @@ namespace SuspensionesAPI.Infraestructura.Repositories
                      && x.fechaHora >= fechaInicio
                      && x.fechaHora <= fechaFinal
                      && x.ductoId == ductoid)
-                     .GroupBy(x => new { x.motivoSuspension.id, x.motivoSuspension.nombre, x.motivoSuspension.logisticaid})
+                     .GroupBy(x => new { x.motivoSuspension.id, x.motivoSuspension.nombre, x.motivoSuspension.logisticaid })
                         .Select(cl => new suspensiones
                         {
                             observaciones = cl.Key.nombre.ToString(), //MOTIVO DE SUSPENSION
-                           bph = cl.Key.id, //ID DEL MOTIVO DE SUSPENSION
-                           bls = cl.Key.logisticaid, // IDENTIFICADOR DE LOGISTICA
-                           km = cl.Sum( c => c.corte), //CONCURRENCIA
+                            bph = cl.Key.id, //ID DEL MOTIVO DE SUSPENSION
+                            bls = cl.Key.logisticaid, // IDENTIFICADOR DE LOGISTICA
+                            km = cl.Sum(c => c.corte), //CONCURRENCIA
                             duracion = cl.Sum(c => c.duracion), //DURACION                        
-                       })
+                        })
                      .ToListAsync();
                 resultItem.Data = ListaSuspensiones;
 
             }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            resultItem.Message = "Ocurrio un error";
-            resultItem.Status = System.Net.HttpStatusCode.NotFound;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                resultItem.Message = "Ocurrio un error";
+                resultItem.Status = System.Net.HttpStatusCode.NotFound;
+            }
+            await Task.CompletedTask;
+            return resultItem;
         }
-        await Task.CompletedTask;
-        return resultItem;
+        //--------------------------------------------------------------------------------------------------
+        //METODO GET ZIETE GENERAL
+        //-------------------------------------------------------------------------------------------------
+        public async Task<DataResultListas<ziete>> ObtenerZieteGeneral(DateTime fechaInicio, DateTime fechaFinal, List<ziete> ListaZite)
+        {
+
+
+            DataResultListas<ziete> resultItem = new DataResultListas<ziete>()
+            {
+
+                Message = "Lista Cargada",
+                Status = System.Net.HttpStatusCode.OK
+            };
+            try
+            {
+                fechaInicio = fechaInicio.AddHours(5);
+                fechaFinal = fechaFinal.AddDays(1).AddHours(4).AddMinutes(59);
+
+                // OPERANDO
+                var T1 = await context.suspensiones
+                         .Include(x => x.ducto)
+                         .Include(x => x.motivoSuspension)
+                         .Where(x => x.motivoSuspension.id == 28
+                          && x.fechaHora >= fechaInicio
+                          && x.fechaHora <= fechaFinal)
+                         .GroupBy(x => new { x.ducto.nombre })
+                            .Select(cl => new suspensiones
+                            {
+                                estatus = cl.Key.nombre,
+                                duracion = cl.Sum(c => c.duracion),
+                                corte = cl.Sum(c => c.corte),
+                            })
+                         .ToListAsync();
+                // SUSPENDIDO POR MOTIVOS LOGISTICOS
+                var T2 = await context.suspensiones
+                         .Include(x => x.ducto)
+                         .Include(x => x.motivoSuspension)
+                         .Where(x => x.motivoSuspension.id != 28 && x.motivoSuspension.logisticaid == 1
+                          && x.fechaHora >= fechaInicio
+                          && x.fechaHora <= fechaFinal)
+                         .GroupBy(x => new { x.ducto.nombre })
+                            .Select(cl => new suspensiones
+                            {
+                                estatus = cl.Key.nombre,
+                                duracion = cl.Sum(c => c.duracion),
+                                corte = cl.Sum(c => c.corte),
+                            })
+                         .ToListAsync();
+                // SUSPENDIDO POR MOTIVOS NO LOGISTICOS
+                var T3 = await context.suspensiones
+                         .Include(x => x.ducto)
+                         .Include(x => x.motivoSuspension)
+                         .Where(x => x.motivoSuspension.id != 28 && x.motivoSuspension.logisticaid == 2
+                          && x.fechaHora >= fechaInicio
+                          && x.fechaHora <= fechaFinal)
+                         .GroupBy(x => new { x.ducto.nombre })
+                            .Select(cl => new suspensiones
+                            {
+                                estatus = cl.Key.nombre,
+                                duracion = cl.Sum(c => c.duracion),
+                                corte = cl.Sum(c => c.corte),
+                            })
+                         .ToListAsync();
+
+                List<ziete> zieteGeneral = new List<ziete>();
+                foreach (suspensiones q in T1)
+                {
+                    zieteGeneral.Add(new ziete() { ducto = q.estatus, tiempoOperando = q.duracion, vecesOperando = q.corte });
+                }
+                foreach (suspensiones q in T2)
+                {
+                    for (int i = 0; i < zieteGeneral.Count; i++)
+                    {
+                        if (q.estatus == zieteGeneral[i].ducto)
+                        {
+                            zieteGeneral[i].tiempoSuspendidoLogistico = q.duracion;
+                            zieteGeneral[i].vecesLogistico = q.corte;
+                        }
+                    }
+                }
+                foreach (suspensiones q in T3)
+                {
+                    for (int i = 0; i < zieteGeneral.Count; i++)
+                    {
+                        if (q.estatus == zieteGeneral[i].ducto)
+                        {
+                            zieteGeneral[i].tiempoSuspendidoNoLogistico = q.duracion;
+                            zieteGeneral[i].vecesNoLogistico = q.corte;
+                        }
+                    }
+                }
+
+                foreach (suspensiones q in T3)
+                {
+                    for (int i = 0; i < zieteGeneral.Count; i++)
+                    {
+
+                        zieteGeneral[i].diasOperando = zieteGeneral[i].tiempoOperando / 24;
+                        zieteGeneral[i].tiempoSuspendido = zieteGeneral[i].tiempoSuspendidoLogistico + zieteGeneral[i].tiempoSuspendidoNoLogistico;
+                        zieteGeneral[i].diasSuspendido = zieteGeneral[i].tiempoSuspendido / 24;
+                        zieteGeneral[i].porTO = (zieteGeneral[i].tiempoOperando * 100) / (zieteGeneral[i].tiempoOperando + zieteGeneral[i].tiempoSuspendido);
+                        zieteGeneral[i].porFO = (zieteGeneral[i].tiempoSuspendido * 100) / (zieteGeneral[i].tiempoOperando + zieteGeneral[i].tiempoSuspendido);
+                        zieteGeneral[i].porSiLog = (zieteGeneral[i].tiempoSuspendidoLogistico * 100) / (zieteGeneral[i].tiempoSuspendido);
+                        zieteGeneral[i].porNoLog = (zieteGeneral[i].tiempoSuspendidoNoLogistico * 100) / (zieteGeneral[i].tiempoSuspendido);
+                        zieteGeneral[i].tiempoTOTAL = zieteGeneral[i].tiempoOperando + zieteGeneral[i].tiempoSuspendido;
+                    }
+                }
+
+
+                resultItem.Data = zieteGeneral;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                resultItem.Message = "Ocurrio un error";
+                resultItem.Status = System.Net.HttpStatusCode.NotFound;
+            }
+            await Task.CompletedTask;
+            return resultItem;
+        }
     }
-    }
+
 }
+
+

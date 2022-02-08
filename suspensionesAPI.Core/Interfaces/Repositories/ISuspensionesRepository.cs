@@ -44,7 +44,8 @@ namespace SuspensionesAPI.Core.Interfaces.Repositories
         //--------------------------------------------------------------------------------------------------------
         //                                  METODOS ZIETE PARTICULAR
         //--------------------------------------------------------------------------------------------------------
-     
-        Task<DataResultListas<suspensiones>> ObtenerZieteParticular(DateTime fechaInicio, DateTime fechaFinal, int ductoId, List<suspensiones> ListaSuspensiones);
+        
+           Task<DataResultListas<suspensiones>> ObtenerZieteParticular(DateTime fechaInicio, DateTime fechaFinal, int ductoId, List<suspensiones> ListaSuspensiones);
+        Task<DataResultListas<ziete>> ObtenerZieteGeneral(DateTime fechaInicio, DateTime fechaFinal, List<ziete> ListaZiete);
     }
 }

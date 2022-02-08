@@ -15,6 +15,7 @@ namespace SuspensionesAPI.Controllers
     public class SuspensionController: ControllerBase
     {
         private static readonly List<suspensiones> ListaSuspensiones = new List<suspensiones>();
+        private static readonly List<ziete> ListaZiete = new List<ziete>();
 
         private readonly ISuspensionesRepository _suspensionesRepository;
 
@@ -168,6 +169,27 @@ namespace SuspensionesAPI.Controllers
         {
             
             var res = await _suspensionesRepository.ObtenerZieteParticular(fechaInicio,fechaFinal,ductoid,ListaSuspensiones);
+            if (res.Status == System.Net.HttpStatusCode.OK)
+            {
+                return Ok(res);
+            }
+            else
+            {
+                return Problem(null, null, 400, "Error en la MATRIX", null);
+            }
+        }
+
+        //--------------------------------------------------------------------------------------------------------
+        //                                  METODOS ZIETE PARTICULAR
+        //--------------------------------------------------------------------------------------------------------
+        [HttpGet("zieteGeneral/{fechaInicio:DateTime}/{fechaFinal:DateTime}")]
+        [ProducesResponseType(typeof(DataResultListas<ziete>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ObtenerZieteGeneral(DateTime fechaInicio, DateTime fechaFinal)
+        {
+
+            var res = await _suspensionesRepository.ObtenerZieteGeneral(fechaInicio, fechaFinal, ListaZiete);
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 return Ok(res);
